@@ -1,0 +1,22 @@
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\obj\Debug\ReadSerialPortWin.frmPrinc.resources
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\obj\Debug\ReadSerialPortWin.Properties.Resources.resources
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\obj\Debug\ReadSerialPortWin.csproj.GenerateResource.Cache
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\bin\Debug\ReadSerialPortWin.exe.config
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\bin\Debug\ReadSerialPortWin.exe.manifest
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\bin\Debug\ReadSerialPortWin.application
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\bin\Debug\ReadSerialPortWin.exe
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\bin\Debug\ReadSerialPortWin.pdb
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\obj\Debug\ReadSerialPortWin.exe.manifest
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\obj\Debug\ReadSerialPortWin.application
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\obj\Debug\ReadSerialPortWin.exe
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\obj\Debug\ReadSerialPortWin.pdb
+F:\Assign datacom\ReadSerialPortWin\bin\Debug\ReadSerialPortWin.exe.config
+F:\Assign datacom\ReadSerialPortWin\obj\Debug\ReadSerialPortWin.exe
+F:\Assign datacom\ReadSerialPortWin\obj\Debug\ReadSerialPortWin.pdb
+F:\Assign datacom\ReadSerialPortWin\obj\Debug\ReadSerialPortWin.csprojResolveAssemblyReference.cache
+F:\Assign datacom\ReadSerialPortWin\obj\Debug\ReadSerialPortWin.frmPrinc.resources
+F:\Assign datacom\ReadSerialPortWin\obj\Debug\ReadSerialPortWin.Properties.Resources.resources
+F:\Assign datacom\ReadSerialPortWin\obj\Debug\ReadSerialPortWin.csproj.GenerateResource.Cache
+C:\Users\ChiChaChai\Documents\CE-KMITL\DataCommunication\DataCommunication_Assignment\OV7670_DataCom\ReadSerialPort\ReadSerialPortWin\bin\Debug\ReadSerialPortWin.exe.config
+C:\Users\ChiChaChai\Documents\CE-KMITL\DataCommunication\DataCommunication_Assignment\OV7670_DataCom\ReadSerialPort\ReadSerialPortWin\obj\Debug\ReadSerialPortWin.exe
+C:\Users\ChiChaChai\Documents\CE-KMITL\DataCommunication\DataCommunication_Assignment\OV7670_DataCom\ReadSerialPort\ReadSerialPortWin\obj\Debug\ReadSerialPortWin.pdb

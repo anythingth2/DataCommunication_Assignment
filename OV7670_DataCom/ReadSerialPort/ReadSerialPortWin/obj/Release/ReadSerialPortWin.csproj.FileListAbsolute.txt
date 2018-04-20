@@ -1,0 +1,13 @@
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\obj\Release\ReadSerialPortWin.frmPrinc.resources
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\obj\Release\ReadSerialPortWin.Properties.Resources.resources
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\obj\Release\ReadSerialPortWin.csproj.GenerateResource.Cache
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\bin\Release\ReadSerialPortWin.exe.config
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\bin\Release\ReadSerialPortWin.exe.manifest
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\bin\Release\ReadSerialPortWin.application
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\bin\Release\ReadSerialPortWin.exe
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\bin\Release\ReadSerialPortWin.pdb
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\obj\Release\ReadSerialPortWin.csprojResolveAssemblyReference.cache
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\obj\Release\ReadSerialPortWin.exe.manifest
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\obj\Release\ReadSerialPortWin.application
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\obj\Release\ReadSerialPortWin.exe
+C:\Users\Sek Su\Desktop\ReadSerialPort\ReadSerialPortWin\obj\Release\ReadSerialPortWin.pdb
