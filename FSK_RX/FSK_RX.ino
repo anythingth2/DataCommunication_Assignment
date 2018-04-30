@@ -10,11 +10,14 @@
 #endif
 
 #define r_slope 512
+#define bias 0
 #define MAX 1023
-#define MIN 0
+#define MIN 0+bias
 #define RISING_EDGE 1
 #define FALLING_EDGE 2
 #define NO_EDGE 3
+#define IDLE_EDGE 4
+#define IDLE_VALUE 50
 
 int freqMod[] = {386, 572, 750, 926};
 char freqData[][2] = {"00", "01", "10", "11"};
@@ -26,8 +29,10 @@ int max0, prev, in , freq0;
 int prevEdge, currentEdge;
 unsigned long topWaveTime, bottomWaveTime;
 int countData = 0, countWave = 0;
-unsigned long frameTime = 89000 * 4 , currentTime = 0;
-
+int offsetWave =2;
+//unsigned long frameTime = 89000 * 4; 
+unsigned long frameTime = 500000; 
+unsigned long currentTime = 0;
 unsigned long startTime = 0;
 int isStart = 0;
 int isStartCountWave = 0;
@@ -51,8 +56,8 @@ int isMin(int value) {
 }
 int getEdge() {
 
-  if (in < prev + 10 && in > prev - 10)return NO_EDGE;
-
+  if (in < prev + 30 && in > prev - 30)return NO_EDGE;
+  //  if (in < IDLE_VALUE)return IDLE_EDGE;
   if (prev > in)
     return FALLING_EDGE;
   else if (prev == in)
@@ -86,32 +91,42 @@ int data = 0;
 void loop() {
   // put your main code here, to run repeatedly:
   in = analogRead(A0);
+  in += bias;
   currentEdge = getEdge();
   currentTime = micros();
+
   if (!isStartCountWave && currentEdge == RISING_EDGE)
   {
     isStartCountWave = true;
     startTime = currentTime;
-    Serial.println("Start_Counting_Wave ");
+    Serial.print("Start_Counting_Wave at");
+    Serial.println(in);
   }
 
-//    if (isStartCountWave) {
-//      Serial.print("in ");
-//      Serial.print(in);
-//      Serial.print("\tedge ");
-//      switch (currentEdge) {
-//        case RISING_EDGE: Serial.print("RISING"); break;
-//        case FALLING_EDGE: Serial.print("FALLING"); break;
-//        case NO_EDGE: Serial.print("NO_EDGE"); break;
-//      }
-//      Serial.println();
-//    }
+  if (isStartCountWave) {
+    delayMicroseconds(1600);
+//        unsigned long ts = micros();
+//        Serial.print("in ");
+//        Serial.print(in);
+//        Serial.print("\tedge ");
+//        switch (currentEdge) {
+//          case RISING_EDGE: Serial.print("RISING"); break;
+//          case FALLING_EDGE: Serial.print("FALLING"); break;
+//          case NO_EDGE: Serial.print("NO_EDGE"); break;
+//        }
+//        Serial.println();
+//
+//        
+  }
 
-  if ((prevEdge == RISING_EDGE || prevEdge == NO_EDGE) && currentEdge == FALLING_EDGE && isMax(prev)) {
+  if ((prevEdge == RISING_EDGE ) && currentEdge == FALLING_EDGE ) {
 
 
     topWaveTime = currentTime;
     isStart = 1;
+     countWave++;
+    //    Serial.print("CountWave ");
+    //    Serial.println(countWave);
     //    Serial.print("\tcountData ");
     //    Serial.print(countData);
 
@@ -122,32 +137,26 @@ void loop() {
 
   if ((prevEdge == FALLING_EDGE || prevEdge == NO_EDGE) && currentEdge == FALLING_EDGE && isMin(in)  && isStart) {
     bottomWaveTime = currentTime;
-    //    freq0 = 1000000 / (bottomWaveTime - topWaveTime) * 2;
+   
 
     //    Serial.print("CountWave ");
     //    Serial.println(countWave);
-    //        Serial.print("Freq ");
-    //        Serial.print(freq0);
-    //        Serial.print("\t");
-    countWave++;
-//    Serial.print("CountWave ");
-//    Serial.println(countWave);
-
     isStart = 0;
   }
 
   if (isStartCountWave && currentTime - startTime > frameTime) {
-    int dataDemod = demodulate2(countWave);
+    int dataDemod = demodulate2(countWave+offsetWave);
     data +=  dataDemod << (countData * 2);
 
-//    Serial.print(dataDemod, BIN);
-//    Serial.println(" ");
+    //    Serial.print(dataDemod, BIN);
+    //    Serial.println(" ");
     if (++countData == 4) {
       Serial.print("\t -> ");
       Serial.print(data);
       Serial.println();
       countData = 0;
       data = 0;
+      delayMicroseconds(5000);
     }
     startTime = currentTime;
     countWave = 0;

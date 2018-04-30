@@ -13,9 +13,9 @@
 //#define f3 3500
 
 int delay0, delay1, delay2, delay3;
-const int SAMPLING = 4;
+const int SAMPLING = 32;
 uint16_t S_DAC[SAMPLING] = {2048, 4095, 2048, 0};
-unsigned long frameTime = 360228 + 15000;
+unsigned long frameTime = 510000 + 50000;
 Adafruit_MCP4725 dac;
 
 void setup() {
@@ -48,6 +48,8 @@ void setup() {
     //    Serial.print("S_DAC = ");
     //    Serial.println(S_DAC[i]);
   }
+
+  
 }
 void generateWave(int freqency) {
   //  Serial.print("Start Generate Wave ");
@@ -62,6 +64,8 @@ void generateWave(int freqency) {
   //  Serial.print(delayTime);
   Serial.print("\tnumWave ");
   Serial.println(numWave);
+  Serial.print("Delay ");
+  Serial.println(delayTime);
   Serial.print("elapsedTime : ");
   unsigned long elapsedTime = micros();
   for (int i = 0; i < numWave; i++) {
@@ -72,9 +76,9 @@ void generateWave(int freqency) {
 
     }
   }
+  
 
-
-  unsigned long waitForFullFrame = frameTime - (micros() - elapsedTime);
+  long waitForFullFrame = frameTime - (micros() - elapsedTime);
   //  if (waitForFullFrame > 0)
   while (waitForFullFrame > 0) {
     if (waitForFullFrame > 16000) {
@@ -85,15 +89,20 @@ void generateWave(int freqency) {
     }
 
   }
+
   elapsedTime = micros() - elapsedTime;
   Serial.println(elapsedTime);
+  
   //  Serial.println("\t Generated!");
 }
+int in = 0;
 int input[4];
 void loop() {
   // put your main code here, to run repeatedly:
+
   if (Serial.available() > 0) {
-    int in = Serial.parseInt();
+    in = Serial.parseInt();
+
     //    Serial.write(in);
     if (in == 0)return;
     Serial.print(in);
@@ -118,6 +127,8 @@ void loop() {
       }
     }
 
-    dac.setVoltage(0, false);
+    delayMicroseconds(5000);
   }
+
+//  dac.setVoltage(S_DAC[SAMPLING-1], false);
 }
