@@ -7,15 +7,11 @@
 #define f1 750
 #define f2 1000
 #define f3 1250
-//#define f0 500
-//#define f1 1500
-//#define f2 2500
-//#define f3 3500
 
-int delay0, delay1, delay2, delay3;
 const int SAMPLING = 32;
 uint16_t S_DAC[SAMPLING] = {2048, 4095, 2048, 0};
 unsigned long frameTime = 510000 + 50000;
+
 Adafruit_MCP4725 dac;
 
 void setup()
@@ -23,23 +19,10 @@ void setup()
   // put your setup code here, to run once:
   dac.begin(0x64);
 
-  delay0 = 1000000 / 50 - defaultFreq;
-  delay1 = 1000000 / 75 - defaultFreq;
-  delay2 = 1000000 / 100 - defaultFreq;
-  delay3 = 1000000 / 125 - defaultFreq;
 
   Serial.begin(115200);
   Serial.flush();
 
-  Serial.print("delay[0-3] -> ");
-  Serial.print(delay0);
-  Serial.print(" ");
-  Serial.print(delay1);
-  Serial.print(" ");
-  Serial.print(delay2);
-  Serial.print(" ");
-  Serial.print(delay3);
-  Serial.println();
   dac.setVoltage(0, false);
 
   for (int i = 0; i < SAMPLING; i++)
