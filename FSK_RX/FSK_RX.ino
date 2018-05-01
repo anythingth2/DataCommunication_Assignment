@@ -9,7 +9,6 @@
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 #endif
 
-#define r_slope 512
 #define bias 0
 #define MAX 1023
 #define MIN 0+bias
@@ -19,19 +18,17 @@
 #define IDLE_EDGE 4
 #define IDLE_VALUE 50
 
-int freqMod[] = {386, 572, 750, 926};
-char freqData[][2] = {"00", "01", "10", "11"};
-//int numWaveMap[] = {4, 6, 8, 10};
+
 int numWaveMap[] = {16, 24, 32, 40};
-int freqMap[] = {};
+
 
 int max0, prev, in , freq0;
 int prevEdge, currentEdge;
-unsigned long topWaveTime, bottomWaveTime;
+
 int countData = 0, countWave = 0;
-int offsetWave =2;
-//unsigned long frameTime = 89000 * 4; 
-unsigned long frameTime = 500000; 
+int offsetWave = 4;
+
+unsigned long frameTime = 500000;
 unsigned long currentTime = 0;
 unsigned long startTime = 0;
 int isStart = 0;
@@ -57,7 +54,6 @@ int isMin(int value) {
 int getEdge() {
 
   if (in < prev + 30 && in > prev - 30)return NO_EDGE;
-  //  if (in < IDLE_VALUE)return IDLE_EDGE;
   if (prev > in)
     return FALLING_EDGE;
   else if (prev == in)
@@ -65,31 +61,27 @@ int getEdge() {
   else return RISING_EDGE;
 }
 
-int demodulate(int freqInput) {
-  for (int i = 0; i < 4; i++) {
-    if (freqInput > freqMod[i] - 25 && freqInput < freqMod[i] + 25) {
-      return i;
-    }
-  }
-  return -1;
-}
+
 int demodulate2(int numWaveInput) {
   for (int i = 0; i < 4; i++) {
     if ( numWaveInput >= numWaveMap[i] - 4 && numWaveInput < numWaveMap[i] + 4) {
-      Serial.print("DEMODULATE ->");
-      Serial.println(numWaveInput);
+       Serial.print("[DEMODULATE] countWave ");
+       Serial.print(numWaveInput);
+       Serial.print(" ");
       return i;
     }
   }
-
-
-  Serial.print("DEMODULATE_err->");
+  Serial.print("[DEMODULATE_err] countWave ");
   Serial.println(numWaveInput);
   return 4;
 }
+void onReceiveByte(int inByte){
+  Serial.print("BYTE ");
+  Serial.println(inByte);
+}
 int data = 0;
 void loop() {
-  // put your main code here, to run repeatedly:
+
   in = analogRead(A0);
   in += bias;
   currentEdge = getEdge();
@@ -99,32 +91,31 @@ void loop() {
   {
     isStartCountWave = true;
     startTime = currentTime;
-    Serial.print("Start_Counting_Wave at");
-    Serial.println(in);
+    // Serial.print("Start_Counting_Wave at ");
+    // Serial.println(in);
   }
 
   if (isStartCountWave) {
     delayMicroseconds(1600);
-//        unsigned long ts = micros();
-//        Serial.print("in ");
-//        Serial.print(in);
-//        Serial.print("\tedge ");
-//        switch (currentEdge) {
-//          case RISING_EDGE: Serial.print("RISING"); break;
-//          case FALLING_EDGE: Serial.print("FALLING"); break;
-//          case NO_EDGE: Serial.print("NO_EDGE"); break;
-//        }
-//        Serial.println();
-//
-//        
+    //        unsigned long ts = micros();
+    //        Serial.print("in ");
+    //        Serial.print(in);
+    //        Serial.print("\tedge ");
+    //        switch (currentEdge) {
+    //          case RISING_EDGE: Serial.print("RISING"); break;
+    //          case FALLING_EDGE: Serial.print("FALLING"); break;
+    //          case NO_EDGE: Serial.print("NO_EDGE"); break;
+    //        }
+    //        Serial.println();
+    //
+    //
   }
 
   if ((prevEdge == RISING_EDGE ) && currentEdge == FALLING_EDGE ) {
 
 
-    topWaveTime = currentTime;
     isStart = 1;
-     countWave++;
+    countWave++;
     //    Serial.print("CountWave ");
     //    Serial.println(countWave);
     //    Serial.print("\tcountData ");
@@ -136,8 +127,8 @@ void loop() {
   }
 
   if ((prevEdge == FALLING_EDGE || prevEdge == NO_EDGE) && currentEdge == FALLING_EDGE && isMin(in)  && isStart) {
-    bottomWaveTime = currentTime;
-   
+
+
 
     //    Serial.print("CountWave ");
     //    Serial.println(countWave);
@@ -145,12 +136,15 @@ void loop() {
   }
 
   if (isStartCountWave && currentTime - startTime > frameTime) {
-    int dataDemod = demodulate2(countWave+offsetWave);
+    int dataDemod = demodulate2(countWave + offsetWave);
     data +=  dataDemod << (countData * 2);
-
-    //    Serial.print(dataDemod, BIN);
-    //    Serial.println(" ");
+    
+    Serial.print(dataDemod, BIN);
+    Serial.print(" ");
     if (++countData == 4) {
+
+      onReceiveByte(data);
+      
       Serial.print("\t -> ");
       Serial.print(data);
       Serial.println();
@@ -163,9 +157,7 @@ void loop() {
     isStartCountWave = false;
     //      Serial.println("End_Counting_wave");
   }
-  //
-  //  if (in != 0)
-  //    Serial.println();
+
 
   prevEdge = currentEdge;
   prev = in;

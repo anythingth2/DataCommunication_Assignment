@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:uno",
-    "port": "COM17",
+    "port": "COM6",
     "sketch": "FSK_TX\\FSK_TX.ino"
 }
