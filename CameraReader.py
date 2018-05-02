@@ -1,16 +1,18 @@
 import serial
-from Info import CAMERA_ARDUINO
+from Config import CAMERA_ARDUINO
 from matplotlib import pyplot as plt
 import numpy as np
 import cv2
 from Util import tic,toc
 
 
-camPort = serial.Serial(port=CAMERA_ARDUINO.PORT,baudrate=CAMERA_ARDUINO.BAUDRATE)
+camPort = serial.Serial()
 img = np.ndarray((CAMERA_ARDUINO.height,CAMERA_ARDUINO.width),dtype='uint8')
 
 def initPort():
-    camPort = serial.Serial(port=info.CAMERA_ARDUINO.PORT,baudrate=info.CAMERA_ARDUINO.BAUDRATE)
+    global camPort
+    camPort = serial.Serial(port=CAMERA_ARDUINO.PORT,baudrate=CAMERA_ARDUINO.BAUDRATE)
+    print('CamPort = {} is open {}'.format(CAMERA_ARDUINO.PORT,camPort.is_open))
 def closePort():
     camPort.flushInput()
     camPort.flushOutput()
@@ -37,7 +39,8 @@ def waitingForImageReady():
                 if tmp == b'RDY*':
                     break
         else:
-            raise serial.SerialException()
+            initPort()
+            # raise serial.SerialException('CamPort is not opened')
 def readImage():
     tic()
     waitingForImageReady()
@@ -47,7 +50,7 @@ def readImage():
             if camPort.is_open:
                 img[y][x] = int.from_bytes(camPort.read(),byteorder='big')
             else:
-                raise serial.SerialException()
+                raise serial.SerialException('CamPort is not opened')
     toc()
     print('Done, reading image.')
     print()

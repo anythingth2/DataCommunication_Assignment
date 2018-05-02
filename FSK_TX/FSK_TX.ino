@@ -105,7 +105,7 @@ int in = 0;
 
 void loop()
 {
-  sendByte(27);
+//    sendByte(27);
   if (Serial.available() > 0)
   {
     in = Serial.parseInt();
